@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/media/neku/home/hard/mcu/pic18/tp/2020-2021/disco/bsp/common/include/pic18fx7k40_config.h</file>
+            <file>file:/media/neku/home/hard/mcu/pic18/tp/2020-2021/disco/bsp/uart1/test/main.c</file>
+            <file>file:/media/neku/home/hard/mcu/pic18/tp/2020-2021/disco/bsp/uart1/src/uart1_putc.c</file>
+            <file>file:/media/neku/home/hard/mcu/pic18/tp/2020-2021/disco/bsp/uart1/src/uart1_gets.c</file>
+            <file>file:/media/neku/home/hard/mcu/pic18/tp/2020-2021/disco/bsp/uart1/src/uart1_getc.c</file>
+        </group>
+    </open-files>
+</project-private>

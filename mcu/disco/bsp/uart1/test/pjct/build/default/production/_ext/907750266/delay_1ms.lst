@@ -1,0 +1,69 @@
+
+
+Microchip Technology PIC18 Macro Assembler V1.45 build -152302408 
+                                                                                                           Mon Feb 15 12:11:30 2021
+
+
+     1                           	processor	18F27K40
+     2                           	opt	pw 132
+     3                           	psect	bss_delay,global,class=BANK0,space=1,delta=1
+     4                           	psect	text,global,reloc=2,class=CODE,delta=1
+     5                           
+     6                           ; file common/delay/src/delay_1ms.h
+     7                           ; brief 1ms software delay
+     8                           ; warning 1ms duration only for 64MHz cpu clock
+     9                           ; author hugo
+    10  0000                     
+    11                           ; linker memory static allocation directives for data
+    12                           
+    13                           	psect	bss_delay
+    14  000060                     delay_cnt1:
+    15  000060                     	ds	1
+    16  000061                     delay_cnt2:
+    17  000061                     	ds	1
+    18  000062                     bsr_tmp:
+    19  000062                     	ds	1
+    20                           
+    21                           ; linker memory static allocation directives for code
+    22                           
+    23                           	psect	text
+    24  0010C2                     _delay_1ms:
+    25                           	opt stack 0
+    26                           
+    27                           ; save BSR context
+    28  0010C2  CFE0 FFE8          	movff	bsr,wreg
+    29  0010C6  0100               	movlb	0
+    30  0010C8  CFE8 F062          	movff	wreg,bsr_tmp
+    31                           
+    32                           ; delay calculation :
+    33                           ; Fcpu = 64MHz, Tcpu = 15.625ns
+    34                           ; Fcy = Fcpu/4 = 16MHz, Tcy = 62.5ns
+    35                           ;
+    36                           ; first internal loop :
+    37                           ; Tloop1 = (1 + 2) * delay_cnt * Tcy + 2 * Tcy
+    38                           ; Tloop1 ~ 3 * delay_cnt * Tcy
+    39                           ;
+    40                           ; second internal loop :
+    41                           ; Tloop2 = (Tloop1 + 5 * Tcy) * delay_cnt2 + (Tloop1 + 4 * Tcy)
+    42                           ; Tloop2 ~ Tloop1 * delay_cnt2
+    43  0010CC  0E64               	movlw	100
+    44  0010CE  6F61               	movwf	delay_cnt2,b
+    45  0010D0  0E35               	movlw	53
+    46  0010D2  6F60               	movwf	delay_cnt1,b
+    47  0010D4  2F60               	decfsz	delay_cnt1,f,b
+    48  0010D6  D7FE               	bra	($+-2)
+    49  0010D8  2F61               	decfsz	delay_cnt2,f,b
+    50  0010DA  D7FA               	bra	($+-10)	; line number offset
+    51                           
+    52                           ; restore BSR context
+    53  0010DC  C062  FFE0         	movff	bsr_tmp,bsr
+    54  0010E0  0C35               	retlw	53
+    55                           wreg	equ	0xFE8
+    56                           bsr	equ	0xFE0
+
+
+Microchip Technology PIC18 Macro Assembler V1.45 build -152302408 
+Symbol Table                                                                                               Mon Feb 15 12:11:30 2021
+
+                            BSR 000FE0                             WREG 000FE8                          bsr_tmp 0062  
+                     _delay_1ms 10C2                       delay_cnt1 0060                       delay_cnt2 0061  
